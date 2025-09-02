@@ -1,16 +1,14 @@
 {
-  "name": "vite-modular",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "vanilla-vite-modular",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "vite": "^7.1.4"
+    "vite": "11.5.1"
   }
 }
