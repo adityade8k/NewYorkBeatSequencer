@@ -1,19 +1,34 @@
-// alias import test
-import { ping } from "./utils/ping";
-//styles import
+// src/main.js
 import './styles/base.css'
+import { el } from '@utils/dom.js'
+import { createRouter } from '@lib/router/router.js'
+import { Home } from '@pages/Home.js'
+import { About } from '@pages/About.js'
 
-// basic setup
-let app = document.getElementById("app");
+// 1) Get the app mount region
+const app = document.getElementById('app')
 
+// 2) Persistent nav (stays across route changes)
+const nav = el('nav', { class: 'site' },
+  el('div', { class: 'brand' },
+    el('strong', {}, 'Vanilla Vite Modular')
+  ),
+  el('div', { class: 'links' },
+    el('a', { href: '#/' }, 'Home'),
+    el('a', { href: '#/about' }, 'About')
+  )
+)
+// Put nav above the app container
+document.body.prepend(nav)
 
+// 3) Define routes
+const routes = {
+  '/': Home,
+  '/about': About
+}
 
-const h1 = document.createElement("h1");
-h1.textContent = "This works?";
+// 4) Create and start the router
+const router = createRouter({ app, routes })
+router.start()
 
-const p1 = document.createElement("p");
-p1.textContent = "hello world";
-
-app.append(h1, p1);
-
-ping("testest");
+console.log('Router started. Try clicking the Home/About links.')
