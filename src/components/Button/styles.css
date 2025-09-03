@@ -1,0 +1,14 @@
+/* Extends the global .btn baseline from base.css */
+.btn--primary { border-color: #2f4fa3; background: #1c2d57; }
+.btn--danger  { border-color: #a32f2f; background: #571c1c; }
+.btn--ghost   { background: transparent; border-color: #2b3242; }
+
+.btn:focus-visible {
+  outline: 2px solid #5e9cff;        /* accessible focus ring */
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

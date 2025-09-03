@@ -1,34 +1,21 @@
-// src/main.js
+// src/main.js (only the relevant additions shown)
 import './styles/base.css'
-import { el } from '@utils/dom.js'
 import { createRouter } from '@lib/router/router.js'
-import { Home } from '@pages/Home.js'
-import { About } from '@pages/About.js'
+import { Nav } from '@components/Nav/Nav.js'
+import { Home } from '@pages/home.js'
+import { About } from '@pages/about.js'
+import { ThreeBackground } from '@components/ThreeBG/ThreeBackground.js' // <-- add this
 
-// 1) Get the app mount region
 const app = document.getElementById('app')
 
-// 2) Persistent nav (stays across route changes)
-const nav = el('nav', { class: 'site' },
-  el('div', { class: 'brand' },
-    el('strong', {}, 'Vanilla Vite Modular')
-  ),
-  el('div', { class: 'links' },
-    el('a', { href: '#/' }, 'Home'),
-    el('a', { href: '#/about' }, 'About')
-  )
-)
-// Put nav above the app container
-document.body.prepend(nav)
+// mount background FIRST so it's behind nav & content
+const three = ThreeBackground()
+document.body.prepend(three.el)
 
-// 3) Define routes
-const routes = {
-  '/': Home,
-  '/about': About
-}
+// now mount persistent nav on top
+const nav = Nav()
+document.body.prepend(nav.el)
 
-// 4) Create and start the router
-const router = createRouter({ app, routes })
-router.start()
-
-console.log('Router started. Try clicking the Home/About links.')
+// router as before
+const routes = { '/': Home, '/about': About }
+createRouter({ app, routes }).start()

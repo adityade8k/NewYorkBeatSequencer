@@ -1,20 +1,34 @@
 // src/pages/Home.js
 import { el } from '@utils/dom.js'
+import { Counter } from '@components/Counter/Counter.js'
 
 export function Home({ mount }) {
-  // build page DOM
+  const title = el('h1', {}, 'Home')
+  const lead  = el('p', {}, 'This page mounts a reusable Counter component.')
+
+  // create component instance
+  const counter = Counter()
+
+  // page root
   const page = el('div', { class: 'stack' },
-    el('h1', {}, 'Home'),
-    el('p', {}, 'This is the home page rendered by the router.'),
-    el('div', { class: 'card' }, 'Edit src/pages/Home.js to change me.')
+    title,
+    lead,
+    el('div', { class: 'card' }, counter.el)
   )
 
-  // mount it
+  // e.g. in Home.js, add:
+const filler = el('div', {}, Array.from({ length: 30 }, (_, i) => el('p', {}, `line ${i+1}`)))
+// and append `filler` somewhere on the page
+
+page.append(filler)
+  // mount into the provided region
   mount.append(page)
 
-  // return cleanup API (remove page from DOM)
   return {
     unmount() {
+      // dispose child component first
+      counter.unmount?.()
+      // then remove the page DOM
       if (page.parentNode === mount) mount.removeChild(page)
     }
   }
