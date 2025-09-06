@@ -1,5 +1,4 @@
 import { el } from '@utils/dom.js'
-import './styles.css'
 
 export function Button({
   label = 'Click',
