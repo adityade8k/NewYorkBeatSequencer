@@ -1,11 +1,10 @@
 /* ========== Design tokens (CSS variables) ========== */
 :root {
-    --bg: #0b0d12;
-    --fg: #e6eaf2;
-    --muted: #9aa4b2;
-    --primary: #5e9cff;
-    --card: #141922;
-    --border: #202635;
+    --negative: #db3a34ff;
+    --bg: #f562daff;
+    --positive: #59c9a5ff;
+    --secondary: #23395bff;
+    --accent: #fffd98ff;
 }
 
 /* ========== Base resets and layout primitives ========== */
@@ -15,13 +14,14 @@
 
 html,
 body {
-    height: 100%;
+    height: 100vh;
+    position: relative;
 }
 
 body {
     margin: 0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
-    background: radial-gradient(1000px 600px at 10% 10%, #131b29 0%, var(--bg) 45%) no-repeat, var(--bg);
+    background: var(--bg);
     color: var(--fg);
 }
 
@@ -35,103 +35,44 @@ a:hover {
     text-decoration: underline;
 }
 
-/* App container */
-#app {
-    max-width: 860px;
-    margin: 48px auto;
-    padding: 0 20px;
-}
-
-/* Simple utility classes */
-.stack {
-    display: grid;
-    gap: 12px;
-}
-
-.row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
-}
-
 /* Buttons (global baseline – components can extend this) */
 .btn {
     appearance: none;
-    border: 1px solid #2b3242;
-    background: #1a2230;
-    color: var(--fg);
-    padding: 10px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: transform .04s ease, background .2s ease, border-color .2s ease;
-}
-
-.btn:hover {
-    background: #20293a;
-}
-
-.btn:active {
-    transform: translateY(1px);
-}
-
-.badge {
-    font-size: 12px;
-    padding: 2px 8px;
-    border: 1px solid #2b3242;
-    border-radius: 999px;
-    color: var(--muted);
-}
-
-/* (We’ll use this later for a persistent navbar) */
-nav.site {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    backdrop-filter: blur(6px);
-    background: linear-gradient(180deg, rgba(11, 13, 18, .7), rgba(11, 13, 18, .2));
-    border-bottom: 1px solid #1d2533;
-    display: flex;
+    border: 0.6vh solid var(--secondary);
+    color: var(--secondary);
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 6%;
+    text-align: center;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
+    font-size: 1em;
 }
 
-nav.site .brand {
-    display: inline-flex;
-    gap: 10px;
-    align-items: center;
+.btn--on{
+    background-color: var(--positive);
+    cursor: none;
 }
 
-nav.site .brand img {
-    width: 28px;
-    height: 28px;
+.btn--off{
+    background-color: var(--negative);
+    box-shadow: var(--secondary) 2vh 2vh;
 }
 
-nav.site .links {
-    display: flex;
-    gap: 16px;
+.btn--off-yellow{
+    background-color: var(--accent);
+    box-shadow: var(--secondary) 0.5vh 0.5vh;
 }
 
-nav.site .links a.active {
-    text-decoration: underline;
+.btn:disabled {
+    cursor: not-allowed;
 }
 
-/* Three.js background layer */
-.three-bg {
-  position: fixed;
-  inset: 0;             /* top:0 right:0 bottom:0 left:0 */
-  z-index: 0;           /* behind nav (z=10) and app content */
-  pointer-events: none; /* don't block clicks/scroll on the page */
+#app {
+    width: 100vh;
+    height: 100vh;
+    max-width: 100vh;
+    max-height: 100vh;
+    border: 2px var(--accent) solid;
+    margin-top: 0;
+    margin: auto;
 }
-
-/* ensure page content draws above the background */
-#app { position: relative; z-index: 1; }
