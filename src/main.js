@@ -24,7 +24,7 @@ const topRow = Container({ className: 'horizontal noStroke', attrs: {} }, fileLo
 
 // Bottom row: Sequencer
 const sequencer = Sequencer({ className: '', attrs: {} })
-const bottomRow = Container({ className: 'noStroke', attrs: {} }, sequencer.el)
+const bottomRow = Container({ className: 'horizontal noStroke', attrs: {} }, sequencer.el)
 
 // Mount
 app.append(topRow, bottomRow)
