@@ -11,6 +11,8 @@ export default defineConfig({
       '@lib': '/src/lib',
       '@components': '/src/components',
       '@pages': '/src/pages',
+      "@packages": '/src/components/packages',
+      "@data": '/src/data'
     },
   },
 })

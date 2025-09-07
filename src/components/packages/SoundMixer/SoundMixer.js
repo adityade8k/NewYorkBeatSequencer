@@ -7,7 +7,7 @@ export function SoundMixer(
   // simple content placeholder; you can pass children to override
   const content = children.length
     ? children
-    : ['File Loader']
+    : ['Sound Mixer']
 
   // compose with your Container (border + 10px padding)
   const root = Container(
