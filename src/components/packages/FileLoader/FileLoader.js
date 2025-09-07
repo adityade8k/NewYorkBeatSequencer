@@ -17,11 +17,7 @@ export function FileLoader({ className = '', attrs = {} } = {}) {
      'Step 1: Choose a sound.'
     )
 
-    const list = FileSelector()
-    const FileSelectorCont = Container(
-        { className: ["vertical", 'fileLoader'], attrs: {} },
-         title, list.el
-    )
+    
     
 
     // Footer (shows currently selected file)
@@ -33,12 +29,17 @@ export function FileLoader({ className = '', attrs = {} } = {}) {
         selectedStrong
     )
 
+    const list = FileSelector()
+    const FileSelectorCont = Container(
+        { className: ["vertical", 'fileLoader'], attrs: {} },
+         title, list.el, footer
+    )
+
     // Root panel
     const root = Container(
         { className: ['vertical', className].filter(Boolean).join(' '), attrs },
         header,
         FileSelectorCont,
-        footer
     )
 
     // Keep footer in sync with store

@@ -2,6 +2,8 @@
 .FileSelector__root{
     flex-direction: column;
     justify-content: flex-start;
+    height: 40%;
+    flex-grow: 14;
 }
 .FileSelector__header {
     display: grid;

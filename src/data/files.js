@@ -23,4 +23,10 @@ export const files = [
     title: 'tone 04',
     url: new URL('../assets/tones/tone1.wav', import.meta.url).href
   },
+
+  {
+    id: 'tone05',
+    title: 'tone 05',
+    url: new URL('../assets/tones/tone1.wav', import.meta.url).href
+  },
 ]
