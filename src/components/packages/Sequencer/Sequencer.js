@@ -1,13 +1,13 @@
 import { Container } from "@/components/Container/Container";
 
-export function FileLoader(
+export function Sequencer(
   { className = '', attrs = {} } = {},
   ...children
 ) {
   // simple content placeholder; you can pass children to override
   const content = children.length
     ? children
-    : ['File Loader']
+    : ['Sequencer']
 
   // compose with your Container (border + 10px padding)
   const root = Container(

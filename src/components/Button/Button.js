@@ -1,40 +1,42 @@
+// src/components/Button/Button.js
 import { el } from '@utils/dom.js'
 
+/**
+ * Variants:
+ *  - 'on'  -> disabled (not clickable)
+ *  - 'off' -> enabled
+ *
+ * Extra colors/styles (e.g. yellow) can be applied via `className`.
+ */
 export function Button({
   label = 'Click',
   onClick,
-  variant = 'default',   // supports 'on' | 'off' | others
-  disabled = false,
+  variant = 'off',
   className = '',
   type = 'button',
   attrs = {}
 } = {}) {
   const classes = ['btn']
-  if (variant && variant !== 'default') classes.push(`btn--${variant}`)
+  if (variant) classes.push(`btn--${variant}`)
   if (className) {
     if (Array.isArray(className)) classes.push(...className.filter(Boolean))
     else classes.push(className)
   }
 
-  const computedDisabled =
-    variant === 'on'  ? true  :
-    variant === 'off' || "off-yellow" ? false :
-    !!disabled
+  const isDisabled = variant === 'on'
 
-  // Optional: if you're treating it like a toggle button, expose aria-pressed
   const ariaPressed =
-    (variant === 'on' && 'true') ||
-    (variant === 'off' && 'false') ||
-    null
+    variant === 'on'  ? 'true' :
+    variant === 'off' ? 'false' : null
 
   return el(
     'button',
     {
       class: classes.join(' '),
       type,
-      disabled: computedDisabled ? '' : null,             
-      onClick: computedDisabled ? null : (onClick || null), // don't wire if disabled
-      'aria-pressed': ariaPressed,                      
+      disabled: isDisabled ? '' : null,
+      onClick: isDisabled ? null : (onClick || null),
+      'aria-pressed': ariaPressed,
       ...attrs
     },
     label

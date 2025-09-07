@@ -58,7 +58,7 @@ a:hover {
     box-shadow: var(--secondary) 2vh 2vh;
 }
 
-.btn--off-yellow {
+.btn--yellow {
     background-color: var(--accent);
     box-shadow: var(--secondary) 0.5vh 0.5vh;
 }
@@ -77,29 +77,61 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 2vh;
+    gap: 1vh;
 }
 
 
 .container {
     border: 2px var(--accent) solid;
     background: transparent;
-    padding: 2vh;
+    padding: 1vh;
     height: 100%;
     display: flex;
     flex-grow: 1;
-    gap: 2vh;
+    gap: 1vh;
+    color: var(--secondary);
+    font-size: 2vh;
 }
+
+.container.label {
+    align-items: center;
+    font-weight: 700;
+    height: auto;
+    flex-grow: 1;
+}
+
+.container.fileLoader{
+    height: 30%;
+}
+
+.container.half{
+    max-width: 50%;
+    max-height: 49.5vh;
+}
+
 .container.vertical {
     flex-direction: column;
     justify-content: space-between;
 }
 
-.container.horizontal{
-    flex-direction: column;
+.container.horizontal {
+    justify-content: space-around;
+}
+.container.noPad {
+    padding: 0px;
+    gap: 0px;
 }
 
-.container.noStroke{
+.container.noStroke {
     border: none;
-    padding: 0;
+    padding: 0px;
 }
+
+.container.secondaryStroke{
+    border-color: var(--secondary);
+    color: var(--accent);
+    font-weight: 900;
+    font-size: 4vh;
+    max-height: 25%;
+}
+

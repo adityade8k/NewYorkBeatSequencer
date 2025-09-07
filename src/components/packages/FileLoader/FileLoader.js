@@ -1,25 +1,56 @@
-import { Container } from "@/components/Container/Container";
+// src/components/packages/FileLoader/FileLoader.js
+import { Container } from '@components/Container/Container.js'
+import { FileSelector } from '@components/FileSelector/FileSelector.js'
+import { selectors, storeSub } from '@lib/state/appStore.js'
+import { el } from '@utils/dom.js'
 
-export function FileLoader(
-  { className = '', attrs = {} } = {},
-  ...children
-) {
-  // simple content placeholder; you can pass children to override
-  const content = children.length
-    ? children
-    : ['File Loader']
+export function FileLoader({ className = '', attrs = {} } = {}) {
+    // Header bar
+    const header = Container(
+        { className: ['secondaryStroke'], attrs: {} },
+        'New York Beat Sequencer'
+    )
 
-  // compose with your Container (border + 10px padding)
-  const root = Container(
-    { className: "", attrs },
-    ...content
-  )
+    // Title/label
+    const title = Container(
+        { className: 'label', attrs: {} }, 
+     'Step 1: Choose a sound.'
+    )
 
-  return {
-    el: root,
-    unmount() {
-      // no side-effects yet; nothing to dispose
-      // keep this for future file input listeners/observers
+    const list = FileSelector()
+    const FileSelectorCont = Container(
+        { className: ["vertical", 'fileLoader'], attrs: {} },
+         title, list.el
+    )
+    
+
+    // Footer (shows currently selected file)
+    const selectedStrong = el('strong', { class: 'filelist__selected' }, '—')
+    const footer = el(
+        'div',
+        { class: 'filelist__footer' },
+        'Currently Selected Track: ',
+        selectedStrong
+    )
+
+    // Root panel
+    const root = Container(
+        { className: ['vertical', className].filter(Boolean).join(' '), attrs },
+        header,
+        FileSelectorCont,
+        footer
+    )
+
+    // Keep footer in sync with store
+    function updateFooter() {
+        const selected = selectors.getSelectedAsset()
+        selectedStrong.textContent = selected?.title ?? '—'
     }
-  }
+    const unsub = storeSub(s => s.fileLoader.selectedFileId, updateFooter)
+    updateFooter() // initial paint
+
+    return {
+        el: root,
+        unmount() { list.unmount?.(); unsub?.() }
+    }
 }

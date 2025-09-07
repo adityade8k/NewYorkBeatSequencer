@@ -1,0 +1,58 @@
+/* src/components/common/FileList/FileSelector.css */
+.FileSelector__root{
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 40%;
+    flex-grow: 14;
+}
+.FileSelector__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 0.5vh 1vh;
+    background: var(--accent);
+}
+
+.FileSelector__rows {
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2vh;
+    padding-right: 0.5vh;
+}
+
+.FileSelector__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    border: 2px solid var(--accent);
+    padding: 0.6vh 0.8vh;
+}
+
+.FileSelector__row.is-selected {
+    border: 2px solid var(--secondary);
+}
+
+.FileSelector__name {
+    padding-right: 1vh;
+}
+
+/* Arrow icon (mask -> fill via background-color) */
+.icon {
+    display: inline-block;
+}
+
+.icon--arrow {
+    width: 3.2vh;
+    height: 3.2vh;
+    background-color: var(--secondary);
+    -webkit-mask: url('/assets/icons/rightArrow.svg') no-repeat center / contain;
+    mask: url('/assets/icons/rightArrow.svg') no-repeat center / contain;
+    cursor: pointer;
+}
+
+.FileSelector__loadIcon {
+    width: 3.2vh;
+    height: 3.2vh;
+}
