@@ -1,10 +1,11 @@
 /* src/components/common/FileList/FileSelector.css */
-.FileSelector__root{
+.FileSelector__root {
     flex-direction: column;
     justify-content: flex-start;
     height: 40%;
     flex-grow: 14;
 }
+
 .FileSelector__header {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -20,6 +21,7 @@
     flex-direction: column;
     gap: 0.2vh;
     padding-right: 0.5vh;
+    scrollbar-gutter: stable both-edges;
 }
 
 .FileSelector__row {
@@ -28,6 +30,38 @@
     align-items: center;
     border: 2px solid var(--accent);
     padding: 0.6vh 0.8vh;
+    width: 98.5%;
+}
+
+/* ---- Custom scrollbar (scoped to the list) ---- */
+.FileSelector__rows {
+    /* Firefox */
+    scrollbar-width: thin;
+    /* auto | thin | none */
+    scrollbar-color: var(--primary, var(--accent)) var(--primary, var(--bg));
+}
+
+/* Chrome / Edge / Safari (WebKit) */
+.FileSelector__rows::-webkit-scrollbar {
+    width: 1vh;
+    border-radius: 0px;
+    /* thickness of the bar */
+}
+
+.FileSelector__rows::-webkit-scrollbar-track {
+    background: var(--scroll-track, var(--bg));
+    /* track color */
+}
+
+.FileSelector__rows::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    /* thumb color */
+    border-radius: 0px;
+    background-clip: padding-box;
+}
+
+.FileSelector__rows::-webkit-scrollbar-corner {
+    background: transparent;
 }
 
 .FileSelector__row.is-selected {

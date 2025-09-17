@@ -12,7 +12,8 @@ export default defineConfig({
       '@components': '/src/components',
       '@pages': '/src/pages',
       "@packages": '/src/components/packages',
-      "@data": '/src/data'
+      "@data": '/src/data',
+      "@playerControls": '/src/components/PlayerControls'
     },
   },
 })

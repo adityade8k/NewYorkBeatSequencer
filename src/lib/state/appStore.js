@@ -46,7 +46,9 @@ const initial = {
     isPlaying: false,
     positionBeats: 0,
     loopBeats: 16             // default 16-step loop
-  }
+  },
+
+  ui: { nowPlayingMixerId: null } 
 }
 
 /** -------------------------------------------
@@ -202,6 +204,22 @@ export const actions = {
   setLoopBeats(n) {
     const beats = Math.max(1, Math.min(128, Number(n) || 16))
     store.set(s => ({ transport: { ...s.transport, loopBeats: beats } }))
+  },
+  mixerPlayRequest(mixerId) {
+    store.set(s => ({
+      ui: { ...(s.ui || {}), nowPlayingMixerId: mixerId },
+      preview: { ...s.preview, isPlaying: true }
+    }))
+  },
+
+  mixerStop(mixerId) {
+    store.set(s => {
+      const isOwner = s.ui?.nowPlayingMixerId === mixerId
+      return {
+        ui: { ...(s.ui || {}), nowPlayingMixerId: isOwner ? null : s.ui.nowPlayingMixerId },
+        preview: { ...s.preview, isPlaying: false }
+      }
+    })
   }
 }
 

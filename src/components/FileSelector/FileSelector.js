@@ -1,15 +1,27 @@
 import { el, clear } from '@utils/dom.js'
 import { Container } from '@components/Container/Container.js'
-import { actions, selectors, storeSub } from '@lib/state/appStore.js'
+import { selectors, storeSub, actions } from '@lib/state/appStore.js'
 import './FileSelector.css'
 
-export function FileSelector({ className = '', attrs = {} } = {}) {
+export function FileSelector({
+  className = '',
+  attrs = {},
+  getItems = (s) => s.assets.list,
+  getSelectedId = (s) => s.fileLoader.selectedFileId,
+  onActivate = (item) => {
+    actions.selectFile(item.id)
+    actions.loadSelectionIntoPreview()
+  },
+  columns = { name: 'File Name', action: 'Load' },
+  rowLabel = (item) => item?.title ?? item?.name ?? '(unnamed)',
+  iconClass = 'icon icon--arrow FileSelector__loadIcon'
+} = {}) {
   // Header + rows
   const header = el(
     'div',
     { class: 'FileSelector__header' },
-    el('span', { class: 'FileSelector__col FileSelector__col--name' }, 'File Name'),
-    el('span', { class: 'FileSelector__col FileSelector__col--load' }, 'Load')
+    el('span', { class: 'FileSelector__col FileSelector__col--name' }, columns.name),
+    el('span', { class: 'FileSelector__col FileSelector__col--load' }, columns.action)
   )
   const rows = el('div', { class: 'FileSelector__rows' })
 
@@ -22,26 +34,24 @@ export function FileSelector({ className = '', attrs = {} } = {}) {
 
   function renderRows() {
     clear(rows)
-    const assets = selectors.getAssets()
-    const selectedId = selectors.getState().fileLoader.selectedFileId
+    const state = selectors.getState()
+    const items = getItems(state) || []
+    const selectedId = getSelectedId?.(state)
 
-    assets.forEach(asset => {
+    items.forEach(item => {
       const row = el('div', {
-        class: ['FileSelector__row', asset.id === selectedId ? 'is-selected' : ''].join(' ')
+        class: ['FileSelector__row', item.id === selectedId ? 'is-selected' : ''].join(' ')
       })
 
-      const name = el('div', { class: 'FileSelector__name' }, asset.title)
+      const name = el('div', { class: 'FileSelector__name' }, rowLabel(item))
 
-      const handler = () => {
-        actions.selectFile(asset.id)
-        actions.loadSelectionIntoPreview()
-      }
+      const handler = () => onActivate(item)
 
       const loadIcon = el('span', {
-        class: 'icon icon--arrow FileSelector__loadIcon',
+        class: iconClass,
         role: 'button',
         tabindex: '0',
-        'aria-label': `Load ${asset.title}`,
+        'aria-label': `${columns.action} ${rowLabel(item)}`,
         onClick: handler,
         onKeydown: (e) => {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler() }
@@ -53,12 +63,14 @@ export function FileSelector({ className = '', attrs = {} } = {}) {
     })
   }
 
-  const unsubAssets = storeSub(s => s.assets.list, renderRows)
-  const unsubSelection = storeSub(s => s.fileLoader.selectedFileId, renderRows)
+  // Re-render when input slices change
+  const unsubItems = storeSub(getItems, renderRows)
+  const unsubSel   = getSelectedId ? storeSub(getSelectedId, renderRows) : null
+
   renderRows()
 
   return {
     el: root,
-    unmount() { unsubAssets?.(); unsubSelection?.() }
+    unmount() { unsubItems?.(); unsubSel?.() }
   }
 }
